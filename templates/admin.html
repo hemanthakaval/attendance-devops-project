@@ -1,24 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Panel</title>
+    <title>Teacher Admin Panel</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
 
-        <h1>Admin Panel</h1>
+<div class="container">
 
-        <h2>Attendance QR Code</h2>
+    <div class="badge">Teacher Dashboard</div>
 
-        <img src="/static/attendance_qr.png" width="250">
+    <h1>Generate Attendance Session</h1>
 
-        <br><br>
+    <p>
+        Create a secure subject-wise attendance session. The QR code expires in 60 seconds.
+    </p>
 
-        <a href="/">
-            <button>Back Home</button>
-        </a>
+    <form method="POST" class="form-card">
+        <input type="text" name="subject" placeholder="Enter Subject Name" required>
+        <button type="submit">Generate Dynamic QR</button>
+    </form>
 
+   {% if qr_generated %}
+<div class="qr-card">
+
+    <h2>Attendance QR Generated</h2>
+
+    <div class="badge success-badge">
+        QR ACTIVE • Expires in 60 Seconds
     </div>
+
+    <p><strong>Subject:</strong> {{ session.subject }}</p>
+    <p><strong>Expires At:</strong> {{ session.expires_at }}</p>
+
+    <img src="/static/attendance_qr.png" width="250">
+
+    <div class="status-box">
+        <h3>Security Status</h3>
+
+        <div class="status-row">
+            <span>QR Expiry ✓</span>
+            <span>GPS ✓</span>
+            <span>IP Log ✓</span>
+            <span>Duplicate Check ✓</span>
+        </div>
+    </div>
+
+</div>
+{% endif %}
+
+    <div class="button-group">
+    <a href="/"><button class="secondary-btn">Back Home</button></a>
+    <a href="/records"><button>View Records</button></a>
+    <a href="/logout"><button class="secondary-btn">Logout</button></a>
+</div>
+
+</div>
+
 </body>
 </html>

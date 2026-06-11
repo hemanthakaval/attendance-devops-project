@@ -6,31 +6,87 @@
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>Mark Attendance</h1>
+    <div class="badge">Student Verification</div>
 
-        <form method="POST">
+    <h1>Mark Attendance</h1>
+    <h2>{{ subject }}</h2>
 
-            <input type="text" name="name" placeholder="Enter Name" required>
+    <p>
+        Location verification is required. Attendance will be accepted only if you are within the allowed classroom range.
+    </p>
 
-            <br><br>
+    <form method="POST" onsubmit="return checkLocation();" class="form-card">
+        <input type="text" name="name" placeholder="Enter Full Name" required>
 
-            <input type="text" name="usn" placeholder="Enter USN" required>
+        <input type="text" name="usn" placeholder="Enter USN / SRN" required>
 
-            <br><br>
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
 
-            <button type="submit">Submit Attendance</button>
+        <button type="button" onclick="getLocation()">Capture GPS Location</button>
 
-        </form>
+        <button type="submit">Submit Attendance</button>
+    </form>
 
-        <br>
-
-        <a href="/">
-            <button>Back Home</button>
-        </a>
-
+    <div class="status-box" id="locationStatus">
+        GPS location not captured
     </div>
+
+    <div class="security-note">
+        Dynamic QR + GPS Verification + Duplicate Protection Enabled
+    </div>
+
+    <a href="/">
+        <button class="secondary-btn">Back Home</button>
+    </a>
+
+</div>
+
+<script>
+    function getLocation() {
+        document.getElementById("locationStatus").innerHTML = "Capturing location...";
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(savePosition, showError, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            });
+        } else {
+            document.getElementById("locationStatus").innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function savePosition(position) {
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+
+        document.getElementById("locationStatus").innerHTML =
+            "GPS Verified Successfully<br>Latitude: " +
+            position.coords.latitude +
+            "<br>Longitude: " +
+            position.coords.longitude;
+    }
+
+    function showError(error) {
+        document.getElementById("locationStatus").innerHTML =
+            "GPS permission denied or failed. Please allow location access.";
+    }
+
+    function checkLocation() {
+        let lat = document.getElementById("latitude").value;
+        let lon = document.getElementById("longitude").value;
+
+        if (lat === "" || lon === "") {
+            alert("Please capture GPS location before submitting attendance.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 
 </body>
 </html>

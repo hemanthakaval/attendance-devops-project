@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Success</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container success-card">
+
+    <div class="badge success-badge">Verified Attendance</div>
+
+    <h1>Attendance Marked Successfully</h1>
+
+    <div class="info-card">
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>USN:</strong> {{ usn }}</p>
+        <p><strong>Subject:</strong> {{ subject }}</p>
+        <p><strong>Time:</strong> {{ time }}</p>
+    </div>
+
+    <div class="security-note">
+        GPS Verified • Dynamic QR Validated • Duplicate Check Passed
+    </div>
+
+    <a href="/">
+        <button>Back Home</button>
+    </a>
+
+</div>
+
+</body>
+</html>

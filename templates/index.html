@@ -1,24 +1,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QR Attendance System</title>
+    <title>SmartAttend Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>QR-Based Attendance System</h1>
 
-        <a href="/admin">
-            <button>Admin Panel</button>
-        </a>
+<div class="layout">
 
-        <a href="/attendance">
-            <button>Mark Attendance</button>
-        </a>
+    <aside class="sidebar">
 
-        <a href="/records">
-            <button>View Records</button>
-        </a>
-    </div>
+        <div class="clean-logo">
+            <h2>SmartAttend</h2>
+            <p>KLE Tech CSE</p>
+        </div>
+
+        <nav>
+            <a class="active" href="/">📊 Dashboard</a>
+            <a href="/admin">📱 Generate QR</a>
+            <a href="/records">📋 Attendance Records</a>
+            <a href="/export">📥 Export CSV</a>
+        </nav>
+
+        <div class="side-note">
+            <p>DevOps Integrated</p>
+            <span>GitHub • Docker • AWS EC2</span>
+        </div>
+
+    </aside>
+
+    <main class="content">
+
+        <header class="topbar">
+
+            <div class="university-header">
+                <h1>Smart Attendance Management System</h1>
+                <p class="subtitle">Secure QR-Based Attendance with GPS Verification</p>
+            </div>
+
+            <div class="top-actions">
+                <a href="/admin"><button>Generate QR</button></a>
+                <a href="/records"><button class="dark-btn">View Records</button></a>
+            </div>
+
+        </header>
+
+        <section class="stats">
+            <div class="card stat">
+                <span>Sessions</span>
+                <h2>{{ total_sessions }}</h2>
+                <p>Total QR sessions</p>
+            </div>
+
+            <div class="card stat">
+                <span>Attendance</span>
+                <h2>{{ total_attendance }}</h2>
+                <p>Verified entries</p>
+            </div>
+
+            <div class="card stat">
+                <span>Subjects</span>
+                <h2>{{ total_subjects }}</h2>
+                <p>Separate records</p>
+            </div>
+
+            <div class="card stat">
+                <span>Students</span>
+                <h2>{{ total_students }}</h2>
+                <p>Unique USNs</p>
+            </div>
+        </section>
+
+        <section class="grid">
+
+            <div class="card wide">
+                <div class="card-head">
+                    <h3>Subject Analytics</h3>
+                    <span>Live</span>
+                </div>
+
+                {% for subject, count in subject_stats %}
+                <div class="progress-row">
+                    <div>
+                        <strong>{{ subject }}</strong>
+                        <small>{{ count }} records</small>
+                    </div>
+                    <div class="progress">
+                        <div style="width: {{ count * 20 }}%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="card security">
+                <div class="card-head">
+                    <h3>Security Score</h3>
+                    <span>Active</span>
+                </div>
+
+                <div class="score">100%</div>
+
+                <ul>
+                    <li>Dynamic QR Expiry</li>
+                    <li>GPS Classroom Check</li>
+                    <li>Duplicate USN Blocking</li>
+                    <li>IP Address Logging</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section class="grid">
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Recent Activity</h3>
+                    <span>Latest</span>
+                </div>
+
+                {% for subject, name, usn, time in recent_activity %}
+                <div class="activity">
+                    <div class="tick">✓</div>
+                    <div>
+                        <strong>{{ name }}</strong>
+                        <p>{{ subject }} • {{ usn }} • {{ time }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>System Workflow</h3>
+                    <span>Automated</span>
+                </div>
+
+                <div class="step"><b>1</b> Teacher creates QR session</div>
+                <div class="step"><b>2</b> Student scans HTTPS QR</div>
+                <div class="step"><b>3</b> GPS and duplicate check</div>
+                <div class="step"><b>4</b> Record stored subject-wise</div>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
 </body>
 </html>
