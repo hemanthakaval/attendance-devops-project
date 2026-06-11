@@ -12,7 +12,7 @@ ADMIN_PASSWORD = "admin123"
 DB_PATH = "database/attendance.db"
 QR_PATH = "static/attendance_qr.png"
 
-NGROK_URL = "http://43.205.196.83:5000"
+NGROK_URL = "http://43.204.30.167:5000"
 
 COLLEGE_LAT = 15.818804
 COLLEGE_LON = 74.497229
